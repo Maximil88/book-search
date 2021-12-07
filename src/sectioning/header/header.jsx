@@ -6,7 +6,7 @@ function Header() {
     <header>
         <div className = "y-wrap">
             <nav className="navs">
-            <p>Home</p>
+            <p><NavLink to="/Home">Home</NavLink></p>
               <ul>
               <li>
                 <NavLink to="/Search">Search</NavLink>
@@ -17,8 +17,6 @@ function Header() {
               <li>
                 <NavLink to="/Login">Login</NavLink>
               </li>
-              <li>About</li>
-              <li>Login</li>
               </ul>
             </nav>
         </div>

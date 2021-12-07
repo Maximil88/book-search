@@ -3,7 +3,7 @@ import './Style.css'
 function About() {
   return (
     <div>
-      I am Search
+      "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
     </div>
   );
 }
