@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Modal from '../../components/modal/modal';
-import './style.css';
+import './Style.css';
 function Search() {
 
     const [ fieldData, setFieldData ] = useState({
