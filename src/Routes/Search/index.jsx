@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Modal from '../../components/modal/modal';
+import { connect } from 'react-redux';
+import { executeSearch } from '../../Redux/Actions/addNewFriend';
 import './Style.css';
-function Search() {
+
+function Search({executeSearch}) {
 
     const [ fieldData, setFieldData ] = useState({
         author: null,
@@ -40,9 +43,10 @@ function Search() {
 
     const handleSubmit = e => {
         e.preventDefault();
-        fetch(`http://openlibrary.org/search.json?author=${fieldData.author}&limit=10`)
-        .then(result => result.json())
-        .then(data => renderResponse(data.docs));
+        // fetch(`http://openlibrary.org/search.json?author=${fieldData.author}&limit=10`)
+        // .then(result => result.json())
+        // .then(data => renderResponse(data.docs));
+        executeSearch(fieldData.author, fieldData.title);
     }
 
     const handleClick = e => {
@@ -85,4 +89,9 @@ return (
   );
 }
 
-export default Search;
+const mapDispatchToProps = {
+    executeSearch
+}
+
+
+export default connect(null, mapDispatchToProps)(Search);
