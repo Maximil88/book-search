@@ -1,27 +1,37 @@
 import { connect } from 'react-redux';
-import getNewFriends from '../../Redux/Actions/getNewFriends';
+import { useState } from 'react';
+import addNewFriend from '../../Redux/Actions/addNewFriend';
 import './Style.css'
 
-function Redux({friends, getNewFriends}) {
+function Redux({friends, addNewFriend}) {
+
+const[newFriend, setNewFriend] = useState('');
+
   
   const amigos = friends.map((friend, index) => {
     return <li key={index}>{friend}</li>
   })
   
 const handleClick = () => {
-  getNewFriends()
+  addNewFriend(newFriend);
+  setNewFriend('');
+}
+
+const handleChange = e => {
+  setNewFriend(e.target.value);
 }
 
   return (
     <div>
       <ul>{amigos}</ul>
+      <input onChange={handleChange} type="text" value={newFriend}/>
       <button onClick={handleClick}>Get New Friends</button>
     </div>
   );
 }
 
 const mapDispatchToProps = {
-  getNewFriends
+  addNewFriend
 }
 
 const mapStateToProps = state => ({
