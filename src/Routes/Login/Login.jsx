@@ -5,7 +5,6 @@ function Login() {
   const handleChange = e => {
     const value = e.target.value;
     const type = e.target.id;
-    console.log(value, type);
   };
 
   return (

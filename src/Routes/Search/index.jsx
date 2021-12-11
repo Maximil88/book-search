@@ -3,32 +3,23 @@ import { Outlet } from 'react-router-dom';
 import Modal from '../../components/modal/modal';
 import { connect } from 'react-redux';
 import { executeSearch } from '../../Redux/Actions/actions';
+import { createListOfBooks } from '../../utils';
 import './Style.css';
 
 function Search({executeSearch, results}) {
 
-    const createListOfBooks = books => {
-        const listOfBooks = books.map((book, index) => {
-            return <li data-bookId={book.key} key={index}>{book.title}</li>;
-        });
-        return listOfBooks;
-    }
-
+    const [bookDescription, setBookDescription] = useState(null);
     const [ fieldData, setFieldData ] = useState({
         author: null,
         title: null
     });
-
     const [listOfBooks, setListOfBooks] = useState('');
 
-    // TODO refactor this later because we have two responses
-    const [response, setResponse] = useState(null);
-    const [bookDescription, setBookDescription] = useState(null);
-
+    
     useEffect(() => {
         const listOfBooks = createListOfBooks(results);
         setListOfBooks(listOfBooks)
-    }, [results])
+    }, [results])   
 
     const handleChange = e => {
         const value = e.target.value;
@@ -43,7 +34,7 @@ function Search({executeSearch, results}) {
         } else {
            dataCopy.title = value;
         }
-        console.log(dataCopy);
+    
         setFieldData(dataCopy);
     };
 
@@ -56,7 +47,6 @@ function Search({executeSearch, results}) {
 
     const handleClick = e => {
         const bookId = e.target.getAttribute('data-bookId');
-        // console.log(bookId)
         fetch(`http://openlibrary.org${bookId}.json`)
         .then(result => result.json())
         .then(data => setBookDescription(data.description));
