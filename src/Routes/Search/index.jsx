@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Modal from '../../components/modal/modal';
 import { connect } from 'react-redux';
-import { executeSearch } from '../../Redux/Actions/addNewFriend';
+import { executeSearch } from '../../Redux/Actions/actions';
 import './Style.css';
 
 function Search({executeSearch, results}) {
@@ -81,7 +81,7 @@ return (
         </div>
         <button type="submit">Submit</button>
         </form>
-        {results && (
+        {results.length > 0 && (
             <div className="results"> 
                 <h2>Search Results</h2>
                 <ul className="results__books" onClick={handleClick}>{listOfBooks}</ul>

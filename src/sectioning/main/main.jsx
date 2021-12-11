@@ -4,7 +4,6 @@ import Home from '../../Routes/Home/Home';
 import About from '../../Routes/About/About';
 import Login from '../../Routes/Login/Login';
 import Search from '../../Routes/Search';
-import Redux from '../../Routes/Redux/Redux';
 import './style.css';
 
 function Main() {
@@ -18,7 +17,6 @@ function Main() {
         <Route path="Search" element={<Search />} >
           <Route path=":id" element ={<p>Some Id has been found</p>} />
         </Route>
-        <Route path="Redux" element={<Redux />} />
         <Route path="*" element={<p>There's nothing here!</p>} />
         </Routes>
     </main>

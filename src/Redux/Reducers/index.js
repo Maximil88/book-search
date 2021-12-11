@@ -8,17 +8,12 @@ const initialState = {
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_NEW_FRIEND: {
-      return {
-        friends: [...state.friends, action.friend]
-      }
+    case EXECUTE_SEARCH: {
+      return Object.assign({}, state, {
+        ...state,
+        searchResults: [...state.searchResults,...action.searchQueryResults]
+      })
     }
-  case EXECUTE_SEARCH: {
-    return Object.assign({}, state, {
-      ...state,
-      searchResults: [...state.searchResults,...action.searchQueryResults]
-    })
-  }
   case EXECUTE_SEARCH_FAIL: {
     return Object.assign({}, state, {
       ...state,
