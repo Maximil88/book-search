@@ -1,21 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Modal from '../../components/modal/modal';
 import { connect } from 'react-redux';
 import { executeSearch } from '../../Redux/Actions/addNewFriend';
 import './Style.css';
 
-function Search({executeSearch}) {
+function Search({executeSearch, results}) {
+
+    const createListOfBooks = books => {
+        const listOfBooks = books.map((book, index) => {
+            return <li data-bookId={book.key} key={index}>{book.title}</li>;
+        });
+        return listOfBooks;
+    }
 
     const [ fieldData, setFieldData ] = useState({
         author: null,
         title: null
     });
 
+    const [listOfBooks, setListOfBooks] = useState('');
+
     // TODO refactor this later because we have two responses
     const [response, setResponse] = useState(null);
     const [bookDescription, setBookDescription] = useState(null);
 
+    useEffect(() => {
+        const listOfBooks = createListOfBooks(results);
+        setListOfBooks(listOfBooks)
+    }, [results])
 
     const handleChange = e => {
         const value = e.target.value;
@@ -34,18 +47,10 @@ function Search({executeSearch}) {
         setFieldData(dataCopy);
     };
 
-    const renderResponse = books => {
-        const listOfBooks = books.map((book, index) => {
-            return <li data-bookId={book.key} key={index}>{book.title}</li>;
-        });
-        setResponse(listOfBooks);
-    }
+   
 
     const handleSubmit = e => {
         e.preventDefault();
-        // fetch(`http://openlibrary.org/search.json?author=${fieldData.author}&limit=10`)
-        // .then(result => result.json())
-        // .then(data => renderResponse(data.docs));
         executeSearch(fieldData.author, fieldData.title);
     }
 
@@ -76,10 +81,10 @@ return (
         </div>
         <button type="submit">Submit</button>
         </form>
-        {response && (
+        {results && (
             <div className="results"> 
                 <h2>Search Results</h2>
-                <ul className="results__books" onClick={handleClick}>{response}</ul>
+                <ul className="results__books" onClick={handleClick}>{listOfBooks}</ul>
             </div>
         )}
         {bookDescription && (
@@ -93,5 +98,9 @@ const mapDispatchToProps = {
     executeSearch
 }
 
+const mapStateToProps = state => ({
+    results: state.searchResults
+})
 
-export default connect(null, mapDispatchToProps)(Search);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
